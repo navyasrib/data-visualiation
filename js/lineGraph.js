@@ -1,10 +1,10 @@
 const WIDTH = 1000;
-const HEIGHT = 850;
+const HEIGHT = 750;
 const MARGIN = 30;
 const MAX_LIMIT = 10;
 const INNER_HEIGHT = HEIGHT - 2*MARGIN;
-var svg, xScale, yScale, g, line;
-var colours = ["steelblue","red","green","blue","black","olive","lime","navy","purple","skyblue"];
+var svg, xScale, yScale, g, line, bar;
+// var colours = ["steelblue","red","green","blue","black","olive","lime","navy","purple","skyblue"];
 
 var getANumber = function () {
     return Math.floor(Math.random() * 10) + 1;
@@ -42,49 +42,63 @@ var createChart = function(loadChart) {
     loadChart(data);
 };
 
-var loadLineChart = function (data) {
+var createLineChart = function (data) {
     g = svg.append('g')
         .attr('transform', 'translate('+MARGIN+', '+MARGIN+')');
     var path = g.append('path');
     line = d3.line()
+        .curve(d3.curveCardinal)
         .x(function(d, i){return xScale(i)})
         .y(function(d){return yScale(d)});
 
-    path.attr('d', line(data)).transition().duration(500);
+    path.attr('d', line(data));
 };
 
-function updateLineGraph() {
+function updateLineChart() {
     var path = g.selectAll("path")
-        .transition().duration(500)
+        // .attr("transform", null)
+        // .transition().duration(500)
         .attr("d", line(data));
 }
 
-function updateBarGraph(data) {
-    d3.selectAll('rect').remove();
+function createBarChart(data) {
+    console.log("inside create bar chart");
     var g = svg.append('g')
         .attr('transform', 'translate('+MARGIN+', '+MARGIN+')')
         .classed(".bars", true);
-    var bar = g.selectAll(".bar")
-        .data(data)
-        .enter();
+    bar = g.selectAll("rect")
+        .data(data);
 
-    bar.append("rect")
-        .attr("fill", function(d, i) {return colours[i]})
-        .attr("x", function(d, i) { return xScale(i); })
-        .attr("y", yScale)
+    //enter
+    bar.enter()
+        .append("rect")
         .attr("width", 50)
+        // .attr("fill", function(d, i) {return colours[i]});
+    updateBarChart(data);
+}
+
+function updateBarChart(data) {
+    var rects = d3.selectAll("rect");
+
+    //update
+    rects.data(data)
+        .attr("y", yScale)
+        .attr("x", function(d, i) { return xScale(i); })
         .attr("height", function(d) { return INNER_HEIGHT-yScale(d); })
         .append("title").text(function(d) {return d;});
+
+    //exit
+    rects.exit().remove();
 }
 
 setInterval(function() {
     data.pop();
     data.unshift(getANumber());
-    updateBarGraph(data);
-    updateLineGraph();
-}, 250);
+    updateBarChart(data);
+    updateLineChart();
+}, 1000);
 
 window.onload = function () {
-    createChart(loadLineChart);
-    createChart(updateBarGraph);
+    createChart(createLineChart);
+    createChart(createBarChart);
 };
