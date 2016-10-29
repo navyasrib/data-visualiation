@@ -2,8 +2,7 @@ var data = [10, 55, 23, 14, 12, 13, 54, 20];
 
 var load = function() {
     var barsDiv = d3.select('.container').append('div').classed("bars", true);
-    var bars = barsDiv.select("div")
-        .data(data);
+    var bars = barsDiv.selectAll("div").data(data);
 
     bars.enter()
         .append("div")
