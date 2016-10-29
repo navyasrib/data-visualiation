@@ -1,0 +1,32 @@
+.container, .labels, .subjects{
+	padding-left: 20px;
+	padding-top: 20px;
+}
+
+.student {
+	margin-bottom: 3px;
+	text-align: center;
+	font-size: larger;
+	border-radius: 20px;
+	color: white;
+}
+.labels {
+	font-size: larger;
+}
+#button {
+	border-radius: 20px;
+	width: 70px;
+	height: 25px;
+}
+.subject-title {
+	float: left;
+	font-size: larger;
+}
+.subject {
+	float: left;
+	width: 100px;
+	text-align: center;
+	border-radius: 20px;
+	font-size: larger;
+	color: white;
+}
