@@ -6,3 +6,9 @@ path{
 rect {
     stroke: black;
 }
+
+.bar {
+	text-align: end;
+	margin-bottom: 4px;
+	font-size: larger;
+}

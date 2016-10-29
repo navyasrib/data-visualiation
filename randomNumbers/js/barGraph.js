@@ -1,68 +1,42 @@
-const WIDTH = 1280;
-const HEIGHT = 800;
-const MARGIN = 30;
-const MAX_LIMIT = 10;
-const INNER_HEIGHT = HEIGHT - 2*MARGIN;
+var data = [10, 55, 23, 14, 12, 13, 54, 20];
+var colors = ["#1C86EE", "#60AFFE", "#499DF5", "#C6E2FF", "#7AA9DD", "#B9D3EE", "#1D7CF2", "#7EB6FF", "#BCD2EE", "#3A66A7"];
 
-var getANumber = function () {
-    return Math.floor(Math.random() * 10) + 1;
+var load = function() {
+    barsDiv = d3.select('.container').append('div').classed("bars", true);
+    var bars = barsDiv.selectAll("div")
+        .data(data);
+
+    bars.enter()
+        .append("div")
+        .classed("bar", true)
+        .style("height", "30px");
+
+    var bar = d3.selectAll(".bar");
+    bar.style("width", "0px")
+        .transition().duration(500)
+        .style("width", function (d) {return d*6+"px"})
+        .text(function (d) { return d;})
+        .style("background", function(d, i){return colors[d%10]});
 };
 
-var generateData = function () {
-    var data = [];
-    for(var i=0; i<MAX_LIMIT; i++) {
-        data.push(getANumber());
-    }
-    return data;
+var updateBars = function() {
+    console.log(data);
+    var bar = d3.selectAll(".bar").data(data);
+    bar.style("width", "0px")
+        .style("width", function (d) {return d*6+"px"})
+        .text(function (d) { return d;})
+        .style("background", function(d, i){return colors[d%10]});
 };
 
-var loadChart = function (data) {
-    var svg = d3.select('.container').append('svg')
-        .attr('width', WIDTH)
-        .attr('height', HEIGHT);
-
-    var xScale = d3.scaleLinear().domain([0,data.length]).range([0, WIDTH]);
-    var yScale = d3.scaleLinear().domain([0, 10]).range([HEIGHT, 0]);
-
-    var xAxis = d3.axisBottom(xScale);
-    var yAxis = d3.axisLeft(yScale);
-
-    svg.append('g')
-        .attr('transform', 'translate('+MARGIN+', '+(HEIGHT - MARGIN)+')')
-        .call(xAxis);
-
-    svg.append('g')
-        .attr('transform', 'translate('+MARGIN+', '+MARGIN+')')
-        .call(yAxis);
-
-    updateGraph();
-    function updateGraph() {
-        d3.selectAll('rect').remove();
-        var g = svg.append('g')
-            .attr('transform', 'translate('+MARGIN+', '+MARGIN+')')
-            .classed(".bars", true);
-        bars = g.selectAll(".bar")
-            .data(data)
-            .enter().append("rect")
-            .attr("x", function(d, i) { return xScale(i); })
-            .attr("y", yScale)
-            .attr("width", 100)
-            .attr("height", function(d) { return INNER_HEIGHT-yScale(d); })
-            .transition()
-            .duration(500)
-            .delay(function(d, i) { return i*10 });
-    }
-
-    setInterval(function() {
-        data.shift();
-        data.push(getANumber());
-        updateGraph();
-    }, 250);
-
-};
+function randomNumber() {
+    return Math.floor(Math.random() * 100) + 1;
+}
+setInterval(function () {
+    var num = data.shift();
+    data.push(randomNumber());
+    updateBars();
+},1000);
 
 window.onload = function () {
-    loadChart(generateData());
+    load();
 };
-
-

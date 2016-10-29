@@ -72,7 +72,7 @@ function createBarChart(data) {
     //enter
     bar.enter()
         .append("rect")
-        .attr("width", 50)
+        .attr("width", 50);
         // .attr("fill", function(d, i) {return colours[i]});
     updateBarChart(data);
 }
