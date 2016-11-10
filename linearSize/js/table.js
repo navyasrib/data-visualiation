@@ -32,9 +32,7 @@ var generateRows = function (data, scale) {
     var rows = tableContent.append('tr');
 
     rows.selectAll('td')
-        .data(function () {
-            console.log(data);
-            return data.map((ele)=>isNaN(scale(ele)) ? ele : scale(ele)) })
+        .data(function () { return data.map((ele)=>isNaN(scale(ele)) ? ele : scale(ele)) })
         .enter()
         .append('td')
         .text(function (d) {
