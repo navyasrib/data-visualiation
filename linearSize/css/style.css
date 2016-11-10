@@ -1,6 +1,23 @@
-.number{
+.number {
     float: left;
     border: groove;
     margin: 5px;
     padding: 10px;
+}
+
+table {
+    border: 1px solid black;
+}
+
+th {
+    border: 1px solid black;
+    height: 30px;
+    width: 80px;
+}
+
+td {
+    border: 1px solid black;
+    height: 30px;
+    width: 80px;
+    text-align: center;
 }
