@@ -1,6 +1,5 @@
 var numbersToRepresent = [0,1,2,3,4,5,6,7,8,9,10];
-var fontScaleWidth = d3.scaleLinear().domain([0,10]).range([12,120]);
-var fontScaleHeight = d3.scaleLinear().domain([0,10]).range([30,180]);
+var fontScale = d3.scaleLinear().domain([0,10]).range(["italic bold 12px/30px Georgia, serif","italic bold 120px/180px Georgia, serif"]);
 
 var loadNumbers = function() {
     var numbersDiv = d3.select('.container').append('div').classed('numbers',true);
@@ -9,7 +8,7 @@ var loadNumbers = function() {
         .append('div')
         .classed('number', true)
         .text(function(n) { return n })
-        .style('font', function(n) { return 'italic bold '+fontScaleWidth(n)+'px/'+fontScaleHeight(n)+'px Georgia'; });
+        .style('font', function(n) { return fontScale(n); });
 };
 
 window.onload = function() {

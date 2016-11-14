@@ -29,13 +29,11 @@ var loadTable = function (headerData) {
 var generateRows = function (data, scale) {
     var rows = tableContent.append('tr');
     rows.selectAll('td')
-        .data(function () {
-            return data.map((ele) => isNaN(scale(ele)) ? ele : scale(ele))
-        })
+        .data(data)
         .enter()
         .append('td')
         .text(function (d) {
-            return d;
+            return isNaN(scale(d)) ? d : scale(d);
         })
 };
 
