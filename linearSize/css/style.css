@@ -21,3 +21,8 @@ td {
     width: 80px;
     text-align: center;
 }
+
+path, line, circle, rect, polygon {
+    fill: none;
+    stroke-width: 3;
+}
