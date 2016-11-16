@@ -24,5 +24,9 @@ td {
 
 path, line, circle, rect, polygon {
     fill: none;
-    stroke-width: 3;
+    stroke-width: 3px;
+}
+
+.line {
+    stroke: steelblue;
 }
