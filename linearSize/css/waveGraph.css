@@ -1,0 +1,12 @@
+path {
+    fill: none;
+    stroke-width: 2px;
+}
+
+.line {
+    stroke: steelblue;
+}
+
+circle {
+    fill: white;
+}
