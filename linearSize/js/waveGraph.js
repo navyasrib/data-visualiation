@@ -3,7 +3,7 @@ const HEIGHT = 550;
 const MARGIN = 50;
 
 var xValues = [0,1,2,3,4,5,6,7,8,9];
-var loadGraph = function (interpolationMethod, typeName) {
+var loadGraph = function (interpolationMethod, typeName, tensionValue) {
     var container = d3.select('body')
         .append('div')
         .classed('container', true);
@@ -14,7 +14,7 @@ var loadGraph = function (interpolationMethod, typeName) {
 
     svg.append('text')
         .attr('x',WIDTH/2)
-        .attr('y',MARGIN)
+        .attr('y',MARGIN-20)
         .text(typeName)
         .attr('font-size', 'larger');
 
@@ -43,7 +43,7 @@ var loadGraph = function (interpolationMethod, typeName) {
         .y(function (d) {
             return yScale((Math.sin(3*d)+1)/2)
         })
-        .curve(interpolationMethod);
+        .curve(interpolationMethod.tension(tensionValue));
 
     var pathEle = svg.append('g')
         .attr('transform', 'translate(' + graphMargin + ',' + verticalMargin + ')')
@@ -67,5 +67,9 @@ var loadGraph = function (interpolationMethod, typeName) {
 };
 
 window.onload = function () {
-    loadGraph(d3.curveLinear, 'curve linear');
+    loadGraph(d3.curveCardinal, 'curve cardinal', -2);
+    loadGraph(d3.curveCardinal, 'curve cardinal', -1);
+    loadGraph(d3.curveCardinal, 'curve cardinal', 0);
+    loadGraph(d3.curveCardinal, 'curve cardinal', 0.5);
+    loadGraph(d3.curveCardinal, 'curve cardinal', 1);
 };
